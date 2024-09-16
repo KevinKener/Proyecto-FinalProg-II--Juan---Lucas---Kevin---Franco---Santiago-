@@ -1,0 +1,146 @@
+/* Estructura básica de la página */
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.content {
+    flex: 1;
+}
+
+/* Estilos del navbar */
+nav {
+    background-color: #35F2F2;
+}
+
+/* Estilos de las tarjetas de productos */
+.card-body-links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.category {
+    text-decoration: none;
+    background-color: #289ead;
+    border: 1px solid #289ead;
+    border-radius: 10px;
+    padding: 8px;
+    color: white;
+}
+
+footer {
+    background-color: #35F2F2;
+    padding: 50px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.nav-link:hover {
+    border: 2px solid #35F2F2;
+    border-radius: 5px;
+}
+
+/* Grid para mostrar las tarjetas de productos */
+.container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Sección de juegos destacados */
+.section-games {
+    text-align: center;
+    background-color: #35F2F2;
+    padding: 20px;
+    grid-column: 1 / -1;
+}
+
+
+/* Todo el estilo del carrousel */
+.carousel-custom {
+    width: 100%;
+    max-height: 500px; 
+    background-color: #289ead; ;
+    overflow: hidden;
+}
+
+
+.carousel-custom .carousel-inner {
+    max-height: 500px;
+}
+
+.carousel-custom img {
+    width: 100%; 
+    height: auto;
+    max-height: 500px; 
+    object-fit: contain; 
+}
+
+.carousel-control-prev, .carousel-control-next {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; 
+    height: 40px; 
+    background-color: rgba(0, 0, 0, 0.3); 
+    border-radius: 50%; 
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    width: 20px; 
+    height: 20px; 
+}
+
+
+
+/* Estilos para pantallas pequeñas */
+@media only screen and (max-width: 600px) {
+    .section-games {
+        padding: 10px;
+    }
+
+    .card {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Estilos para la línea de separación */
+.separator {
+    border-top: 2px solid #35F2F2; 
+    margin: 40px 0; 
+}
+
+
+/* Estilos del formulario de contacto */
+#contactForm {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+#contactForm h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#contactForm .form-control {
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+#contactForm button {
+    background-color: #289ead;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+#contactForm button:hover {
+    background-color: #28b5b5;
+}
