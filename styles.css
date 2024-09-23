@@ -29,48 +29,30 @@ nav {
     color: white;
 }
 
-footer {
-    background-color: #35F2F2;
-    padding: 50px;
-    text-align: center;
-    position: relative;
-    width: 100%;
-}
-
 .nav-link:hover {
     border: 2px solid #35F2F2;
     border-radius: 5px;
 }
 
-/* Img dimensiones */
-/* object-fit: cover; Esto asegura que la imagen se recorte en lugar de deformarse */ 
-.card-img-top {
-    width: 100%;
-    height: 200px; 
-    object-fit: cover;
-}
+/* Estilos del boton de busqueda, y del efecto aplicado con hover */
+.btn {
+    border-color: black; 
+    color: black; 
+  }
 
-/* Grid para mostrar las tarjetas de productos */
-/* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); --> Autofill es util para que las columnas se distribuyan automaticamente segun el tamaño de la pantalla
-mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponible que queda 1fr(1 fraccion)*/
-/*Elegimos autofill en vez de autofit ya que este ultimo estira las columnas y no queriamos eso*/
-.container-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
-}
+  .btn i {
+    color: black; 
+  }
 
+  .btn:hover {
+    background-color: black; 
+    border-color: black; 
+    color: white; 
+  }
 
-/* Sección de juegos destacados */
-.section-games {
-    text-align: center;
-    background-color: #35F2F2;
-    padding: 20px;
-    grid-column: 1 / -1;
-}
-
+  .btn:hover i {
+    color: white; 
+  }
 
 /* Todo el estilo del carrousel */
 .carousel-custom {
@@ -104,19 +86,35 @@ mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponi
 .carousel-control-prev-icon, .carousel-control-next-icon {
     width: 20px; 
     height: 20px; 
+}  
+
+/* Img dimensiones */
+/* object-fit: cover; Esto asegura que la imagen se recorte en lugar de deformarse */ 
+.card-img-top {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+}
+
+/* Grid para mostrar las tarjetas de productos */
+/* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); --> Autofill es util para que las columnas se distribuyan automaticamente segun el tamaño de la pantalla
+mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponible que queda 1fr(1 fraccion)*/
+/*Elegimos autofill en vez de autofit ya que este ultimo estira las columnas y no queriamos eso*/
+.container-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
 }
 
 
-
-/* Estilos para pantallas pequeñas */
-@media only screen and (max-width: 600px) {
-    .section-games {
-        padding: 10px;
-    }
-
-    .card {
-        grid-column: 1 / -1;
-    }
+/* Sección de juegos destacados */
+.section-games {
+    text-align: center;
+    background-color: #35F2F2;
+    padding: 20px;
+    grid-column: 1 / -1;
 }
 
 /* Estilos para la línea de separación */
@@ -156,4 +154,24 @@ mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponi
 
 #contactForm button:hover {
     background-color: #28b5b5;
+}
+
+footer {
+    background-color: #35F2F2;
+    padding: 50px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+
+/* Estilos para pantallas pequeñas */
+@media only screen and (max-width: 600px) {
+    .section-games {
+        padding: 10px;
+    }
+
+    .card {
+        grid-column: 1 / -1;
+    }
 }
