@@ -51,6 +51,9 @@ footer {
 }
 
 /* Grid para mostrar las tarjetas de productos */
+/* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); --> Autofill es util para que las columnas se distribuyan automaticamente segun el tamaño de la pantalla
+mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponible que queda 1fr(1 fraccion)*/
+/*Elegimos autofill en vez de autofit ya que este ultimo estira las columnas y no queriamos eso*/
 .container-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -58,6 +61,7 @@ footer {
     padding: 20px;
     justify-content: center;
 }
+
 
 /* Sección de juegos destacados */
 .section-games {
