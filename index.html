@@ -169,25 +169,29 @@
     <div class="separator"></div>
 
     <!-- Sección del formulario de contacto -->
-    <div id="contactForm" class="container mt-5">
+    <div class="container mt-5">
       <h2>Formulario de Contacto</h2>
-      <form action="#" method="post" onsubmit="return validarDatos()">
+      <form id="contactForm" action="#" method="post" ">
         <div class="mb-3">
           <label for="name" class="form-label">Nombre Completo</label>
-          <input type="text" class="form-control" id="name" name="name" placeholder="Escribe tu nombre completo" required>
+          <input type="text" class="form-control" id="name" name="name" placeholder="Escribe tu nombre completo">
+          <div class="error-text" id="errorName"></div>
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Correo Electrónico</label>
-          <input type="email" class="form-control" id="email" name="email" placeholder="tu@correo.com" required>
+          <input type="email" class="form-control" id="email" name="email" placeholder="tu@correo.com">
+          <div class="error-text" id="errorEmail"></div>
         </div>
         <div class="mb-3">
           <label for="subject" class="form-label">Asunto</label>
-          <input type="text" class="form-control" id="subject" name="subject" placeholder="Motivo del mensaje" required>
+          <input type="text" class="form-control" id="subject" name="subject" placeholder="Motivo del mensaje">
+          <div class="error-text" id="errorSubject"></div>
         </div>
         <div class="mb-3">
           <label for="message" class="form-label">Mensaje</label>
           <textarea class="form-control" id="message" name="message" rows="5" placeholder="Escribe tu mensaje aquí"
-            required></textarea>
+            ></textarea>
+            <div class="error-text" id="errorMessage"></div>
         </div>
         <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
       </form>

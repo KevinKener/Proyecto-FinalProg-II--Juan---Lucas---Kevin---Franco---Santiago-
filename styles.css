@@ -38,21 +38,21 @@ nav {
 .btn {
     border-color: black; 
     color: black; 
-  }
+}
 
-  .btn i {
+.btn i {
     color: black; 
-  }
+}
 
-  .btn:hover {
+.btn:hover {
     background-color: black; 
     border-color: black; 
     color: white; 
-  }
+}
 
-  .btn:hover i {
+.btn:hover i {
     color: white; 
-  }
+}
 
 /* Todo el estilo del carrousel */
 .carousel-custom {
@@ -154,6 +154,10 @@ mantiene un minimo de 300px(ancho) y un maximo que ocupa todo el espacio disponi
 
 #contactForm button:hover {
     background-color: #28b5b5;
+}
+.error-text{
+    color: #911;
+    font-size: 12px;
 }
 
 footer {
