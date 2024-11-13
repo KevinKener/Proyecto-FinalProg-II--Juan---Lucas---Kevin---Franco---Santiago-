@@ -1,0 +1,11 @@
+body{
+    background-color: #35F2F2;
+}
+.img{
+    display: flex;
+    justify-content: center;
+
+}
+h1,h2{
+    text-align: center;
+}

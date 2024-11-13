@@ -48,13 +48,14 @@ document.addEventListener("DOMContentLoaded", () =>{
             }
             else{
                 alert("Envio Exitoso!!");
+                location.reload();
             }
     });
     //Eventos input
-    document.getElementById("name").addEventListener("input", validarNombre);
-    document.getElementById("email").addEventListener("input", validarEmail);
-    document.getElementById("subject").addEventListener("input", validarAsunto);
-    document.getElementById("message").addEventListener("input", validarMensaje);
+    document.getElementById("name").addEventListener("input", () => validarNombre());
+    document.getElementById("email").addEventListener("input", () => validarEmail());
+    document.getElementById("subject").addEventListener("input", () => validarAsunto());
+    document.getElementById("message").addEventListener("input", () => validarMensaje());
 
     //Funcion validar nombre
     function validarNombre(name) {
