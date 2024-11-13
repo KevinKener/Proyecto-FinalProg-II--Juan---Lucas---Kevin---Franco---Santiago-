@@ -81,16 +81,14 @@ function validarMensaje() {
   return true;
 }
 
-// Agrego evento blur a cada input, esto hará que cuando se desenfoque muestre inmediatamente si hay algún error
+// Agrego evento input esto permite que las validaciones se muestren y oculten en tiempo real
 
-nombreIngresado.addEventListener("blur", validarNombre);
-emailIngresado.addEventListener("blur", validarEmail);
-asuntoIngresado.addEventListener("blur", validarAsunto);
-msjIngresado.addEventListener("blur", validarMensaje);
+nombreIngresado.addEventListener("input", validarNombre);
+emailIngresado.addEventListener("input", validarEmail);
+asuntoIngresado.addEventListener("input", validarAsunto);
+msjIngresado.addEventListener("input", validarMensaje);
 
 
-// Por último, solo queda prevenir que el formulario se envíe teniendo errores con la línea 153
-// De hecho, no sólo se debe prevenir si no que al llamar a cada una de las funciones de validación
 // se marcan los errores de aquellos inputs que no hayan sido enfocadas antes (lo que no arrojaría mensaje de error)
 
 const formulario = document.getElementById("contactForm");
