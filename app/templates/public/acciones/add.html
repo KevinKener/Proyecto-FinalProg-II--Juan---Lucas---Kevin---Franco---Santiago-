@@ -1,7 +1,24 @@
 {% extends 'public/layout.html' %}
 {% block title %}Registrar Juego{% endblock %}
 
+
 {% block body %}
+<!-- Mensajes flash, aparecerán antes del contenido principal -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="toast-container">
+    {% for category, message in messages %}
+    <div class="toast {{ category }}">
+        <div class="toast-body">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+
 <section>
     <h2>
         <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>

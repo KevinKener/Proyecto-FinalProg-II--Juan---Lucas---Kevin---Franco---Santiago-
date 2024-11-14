@@ -15,25 +15,27 @@
         <div class="row">
             <div class="col">
                 <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" value="{{ juego.nombre }}" class="form-control" required 
-                       placeholder="Ej. Super Mario Bros">
+                <input type="text" name="nombre" value="{{ juego.nombre }}" class="form-control" required
+                    placeholder="Ej. Super Mario Bros">
             </div>
             <div class="col">
                 <label for="categoria">Categoría</label>
                 <select name="categoria" class="form-control" required>
                     <option value="">Selecciona una categoría</option>
-                    <option value="Acción" {% if juego.categoria == "Acción" %}selected{% endif %}>Acción</option>
-                    <option value="Aventura" {% if juego.categoria == "Aventura" %}selected{% endif %}>Aventura</option>
-                    <option value="Deportes" {% if juego.categoria == "Deportes" %}selected{% endif %}>Deportes</option>
-                    <option value="Estrategia" {% if juego.categoria == "Estrategia" %}selected{% endif %}>Estrategia</option>
-                    <option value="RPG" {% if juego.categoria == "RPG" %}selected{% endif %}>RPG</option>
-                    <option value="Simulación" {% if juego.categoria == "Simulación" %}selected{% endif %}>Simulación</option>
-                    <option value="Carreras" {% if juego.categoria == "Carreras" %}selected{% endif %}>Carreras</option>
-                    <option value="Terror" {% if juego.categoria == "Terror" %}selected{% endif %}>Terror</option>
+                    <option value="Acción" {% if juego.categoria=="Acción" %}selected{% endif %}>Acción</option>
+                    <option value="Aventura" {% if juego.categoria=="Aventura" %}selected{% endif %}>Aventura</option>
+                    <option value="Deportes" {% if juego.categoria=="Deportes" %}selected{% endif %}>Deportes</option>
+                    <option value="Estrategia" {% if juego.categoria=="Estrategia" %}selected{% endif %}>Estrategia
+                    </option>
+                    <option value="RPG" {% if juego.categoria=="RPG" %}selected{% endif %}>RPG</option>
+                    <option value="Simulación" {% if juego.categoria=="Simulación" %}selected{% endif %}>Simulación
+                    </option>
+                    <option value="Carreras" {% if juego.categoria=="Carreras" %}selected{% endif %}>Carreras</option>
+                    <option value="Terror" {% if juego.categoria=="Terror" %}selected{% endif %}>Terror</option>
                 </select>
             </div>
         </div>
-        
+
 
         <div class="row">
             <div class="col">
@@ -42,30 +44,30 @@
             </div>
             <div class="col">
                 <label for="precio">Precio</label>
-                <input type="number" name="precio" value="{{ juego.precio }}" class="form-control" 
-                       step="0.01" min="0" required placeholder="Ej. 199.99">
+                <input type="number" name="precio" value="{{ juego.precio }}" class="form-control" step="0.01" min="0"
+                    required placeholder="Ej. 199.99">
             </div>
         </div>
-        
+
 
         <div class="row">
             <div class="col">
                 <label for="anio_lanzamiento">Año de Lanzamiento</label>
-                <input type="text" name="anio_lanzamiento" class="form-control" 
-                       value="{{ juego.anio_lanzamiento }}" required 
-                       pattern="^(19|20)\d{2}$" 
-                       placeholder="Ingrese un año (ej. 2024)">
+                <input type="text" name="anio_lanzamiento" class="form-control" value="{{ juego.anio_lanzamiento }}"
+                    required pattern="^(19|20)\d{2}$" placeholder="Ingrese un año (ej. 2024)">
             </div>
             <div class="col">
                 <label for="plataforma">Plataforma</label>
                 <select name="plataforma" class="form-control" required>
                     <option value="">Selecciona una plataforma</option>
-                    <option value="PC" {% if juego.plataforma == "PC" %}selected{% endif %}>PC</option>
-                    <option value="PlayStation" {% if juego.plataforma == "PlayStation" %}selected{% endif %}>PlayStation</option>
-                    <option value="Xbox" {% if juego.plataforma == "Xbox" %}selected{% endif %}>Xbox</option>
-                    <option value="Nintendo Switch" {% if juego.plataforma == "Nintendo Switch" %}selected{% endif %}>Nintendo Switch</option>
-                    <option value="Mobile" {% if juego.plataforma == "Mobile" %}selected{% endif %}>Mobile</option>
-                    <option value="VR" {% if juego.plataforma == "VR" %}selected{% endif %}>VR (Realidad Virtual)</option>
+                    <option value="PC" {% if juego.plataforma=="PC" %}selected{% endif %}>PC</option>
+                    <option value="PlayStation" {% if juego.plataforma=="PlayStation" %}selected{% endif %}>PlayStation
+                    </option>
+                    <option value="Xbox" {% if juego.plataforma=="Xbox" %}selected{% endif %}>Xbox</option>
+                    <option value="Nintendo Switch" {% if juego.plataforma=="Nintendo Switch" %}selected{% endif %}>
+                        Nintendo Switch</option>
+                    <option value="Mobile" {% if juego.plataforma=="Mobile" %}selected{% endif %}>Mobile</option>
+                    <option value="VR" {% if juego.plataforma=="VR" %}selected{% endif %}>VR (Realidad Virtual)</option>
                 </select>
             </div>
         </div>
@@ -75,12 +77,13 @@
                 <label for="disponibilidad">Disponibilidad</label>
                 <select name="disponibilidad" class="form-control" required>
                     <option value="">Selecciona una opción</option>
-                    <option value="Disponible" {% if juego.disponibilidad == "Disponible" %}selected{% endif %}>Disponible</option>
-                    <option value="Agotado" {% if juego.disponibilidad == "Agotado" %}selected{% endif %}>Agotado</option>
+                    <option value="Disponible" {% if juego.disponibilidad=="Disponible" %}selected{% endif %}>Disponible
+                    </option>
+                    <option value="Agotado" {% if juego.disponibilidad=="Agotado" %}selected{% endif %}>Agotado</option>
                 </select>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col">
                 <label for="foto">Nueva Foto</label>
@@ -115,10 +118,14 @@
             contentType: false,
             processData: false,
             success: function (response) {
-                window.location.href = '/';  // Redirigir a la página principal después de la actualización
+                // Muestra el mensaje de alerta y luego redirige
+                mensajeAlerta('El juego ha sido actualizado exitosamente.', 'success');
+                setTimeout(() => {
+                    window.location.href = '/';  // Redirigir a la página principal después de un breve tiempo
+                }, 5000); // Redirige después de 5 segundos
             },
             error: function (xhr, status, error) {
-                alert('Error al actualizar el juego.');
+                mensajeAlerta('Error al actualizar el juego.', 'error');
             }
         });
     };

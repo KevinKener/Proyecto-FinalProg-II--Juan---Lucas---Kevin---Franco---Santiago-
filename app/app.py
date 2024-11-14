@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from werkzeug.utils import secure_filename
 from config import init_app
 import os
@@ -7,7 +7,10 @@ from flask_mysqldb import MySQL
 
 
 # Inicializa la app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='../app/templates/')
+
+# Establecer una clave secreta única
+app.config['SECRET_KEY'] = 'gamehub'
 
 # Configura para que las plantillas se recarguen automáticamente
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -75,12 +78,14 @@ def formAddJuego():
 
         # Verificar si se ha cargado un archivo
         if 'foto' not in request.files:
-            return render_template('public/layout.html', msg='Debe cargar una foto', tipo=1)
-        
+            flash('Debe cargar una foto', 'error')
+            return redirect(url_for('addJuego'))
+
         foto = request.files['foto']
         
         if foto.filename == '':
-            return render_template('public/layout.html', msg='Debe seleccionar una foto para cargar', tipo=1)
+            flash('Debe seleccionar una foto para cargar', 'error')
+            return redirect(url_for('addJuego'))
 
         # Si el archivo es válido, guardarlo
         nuevoNombreFile = recibeFoto(foto)
@@ -88,11 +93,14 @@ def formAddJuego():
             # Registrar el juego en la base de datos
             resultData = registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile)
             if resultData == 1:
+                flash('El juego se ha registrado exitosamente', 'success')
                 return redirect(url_for('inicio'))  # Redirigir a la página principal
             else:
-                return render_template('public/layout.html', msg='Error al registrar el juego', tipo=1)
+                flash('Error al registrar el juego', 'error')
+                return redirect(url_for('addJuego'))
         else:
-            return render_template('public/layout.html', msg='Formato de archivo no permitido. Debe ser una imagen', tipo=1)
+            flash('Formato de archivo no permitido. Debe ser una imagen', 'error')
+            return redirect(url_for('addJuego'))
 
 # Simulación de la función para registrar un juego (aquí iría la lógica de la base de datos)
 def registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto):
@@ -236,7 +244,8 @@ def obtener_juego_por_id(id):
 
 @app.errorhandler(404)
 def notfound(error):
-    return redirect(url_for('inicio'))
+    return render_template('404.html'), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True)

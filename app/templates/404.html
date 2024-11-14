@@ -1,12 +1,32 @@
+{% extends 'public/layout.html' %}
 
-{% extends './layout.html' %}
-
-{% block title %}Pagina no encontrada{% endblock %}
+{% block title %}Página no encontrada{% endblock %}
 
 {% block body %}
 <div class="img">
-    <img src="../static/img/GameHub logo_preview_rev_1.png" alt="">
+    <img src="/static/img/GameHub%20logo_preview_rev_1.png" alt="Logo de GameHub">
 </div>
-<h1>Opss... pagina no encontrada</h1>
+<h1>Opss... página no encontrada</h1>
 <h2>Error 404</h2>
+<p>Serás redirigido a la página principal en <span id="countdown">3</span> segundos...</p>
+
+<script type="text/javascript">
+    // Temporizador para redirigir
+    let countdown = document.getElementById("countdown");
+    let count = 3;
+
+    function updateCountdown() {
+        if (count > 0) {
+            count--;
+            countdown.innerText = count;
+        }
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Redirigir después de 3 segundos
+    setTimeout(function() {
+        window.location.href = "{{ url_for('inicio') }}";
+    }, 3000);
+</script>
 {% endblock %}

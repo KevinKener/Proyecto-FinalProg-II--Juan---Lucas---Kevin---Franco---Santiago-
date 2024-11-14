@@ -49,10 +49,10 @@
   <script src="{{ url_for('static', filename ='assets/js/bootstrap.min.js') }}"></script>
   <script src="{{ url_for('static', filename ='assets/js/alerta.js') }}"></script>
   <script src="{{ url_for('static', filename ='assets/js/loader.js') }}"></script>
-  
+
   <script>
     function eliminarJuegoJavaScript(id) {
-      const idR = document.querySelector('#id_'+ id);
+      const idR = document.querySelector('#id_' + id);
       nombreFoto = idR.dataset.foto;
 
       let li = document.querySelector('#Registro_' + id);
@@ -65,16 +65,15 @@
         success: function (resp) {
           if (resp == 1) {
             li.remove();
-            mensajeAlerta(msg='Registro Eliminado con éxito.', tipo=1); 
+            mensajeAlerta(msg = 'Registro Eliminado con éxito.', tipo = 1);
           } else {
             console.log('Error al intentar borrar el juego');
           }
         }
       });
-    }  
+    }
   </script>
 
-  
 
 </body>
 
