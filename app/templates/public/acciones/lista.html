@@ -1,0 +1,33 @@
+{% if miData %}
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Año de Lanzamiento</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for juego in miData %}
+            <tr id="Registro_{{ juego.id }}">
+                <td>{{ juego.id }}</td>
+                <td>{{ juego.nombre }}</td>
+                <td>{{ juego.categoria }}</td>
+                <td>{{ juego.anio_lanzamiento }}</td>
+                <td><img src="{{ url_for('static', filename='assets/fotos_juegos/' + juego.foto) }}" width="100"></td>
+                <td>
+                    <!-- Botón con evento onclick para eliminar -->
+                    <button onclick="eliminarJuegoJavaScript({{ juego.id }})" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}

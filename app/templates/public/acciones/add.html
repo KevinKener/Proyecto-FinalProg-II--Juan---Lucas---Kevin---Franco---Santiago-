@@ -1,0 +1,62 @@
+{% extends 'public/layout.html' %}
+{% block title %}Registrar Juego{% endblock %}
+
+{% block body %}
+<section>
+    <h2>
+        <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Registrar Nuevo Juego
+        <hr>
+    </h2>
+
+    <form action="{{ url_for('formAddJuego') }}" method="POST" class="mb-3" autocomplete="off" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" class="form-control" required>
+            </div>
+            <div class="col">
+                <label for="categoria">Categoría</label>
+                <input type="text" name="categoria" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="anio_lanzamiento">Año de Lanzamiento</label>
+                <input type="number" name="anio_lanzamiento" class="form-control" required>
+            </div>
+            <div class="col">
+                <label for="plataforma">Plataforma</label>
+                <input type="text" name="plataforma" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <label for="precio">Precio</label>
+                <input type="text" name="precio" class="form-control" required>
+            </div>
+
+            <div class="col">
+                <label for="disponibilidad">Disponibilidad</label>
+                <select name="disponibilidad" class="form-control" required>
+                    <option value="Disponible">Disponible</option>
+                    <option value="Agotado">Agotado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <label for="foto">Foto del Juego</label>
+                <input type="file" name="foto" class="form-control-file" accept="image/*" required>
+            </div>
+        </div>
+        <hr>
+
+        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Registro">
+    </form>
+</section>
+
+{% endblock %}
