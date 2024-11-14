@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 from config import init_app
 import os
+from flask_mysqldb import MySQL
 
 
 # Inicializa la app

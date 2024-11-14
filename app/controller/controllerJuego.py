@@ -2,6 +2,49 @@ from config import mysql  # Importa la instancia de MySQL desde config.py
 import random
 import string
 
+# controller/controllerJuego.py
+
+from flask import request, redirect, url_for, flash
+from werkzeug.utils import secure_filename
+import os
+
+def agregarJuego():
+    # Verifica si el formulario fue enviado con una foto
+    if 'foto' not in request.files:
+        flash('No se ha seleccionado una foto', 'error')
+        return redirect(url_for('add_juego'))  # Redirigir a la página de agregar juego
+
+    foto = request.files['foto']
+    
+    # Verificar si el archivo tiene una extensión válida
+    if foto and allowed_file(foto.filename):
+        # Asegúrate de que el nombre del archivo sea seguro
+        filename = secure_filename(foto.filename)
+        foto_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        
+        # Guardar la foto en la carpeta uploads
+        foto.save(foto_path)
+
+        # Obtener el nombre del juego desde el formulario
+        nombre = request.form['nombre']
+        
+        # Insertar el juego en la base de datos
+        try:
+            cur = app.mysql.connection.cursor()
+            cur.execute('''INSERT INTO juegos (nombre, foto) VALUES (%s, %s)''', (nombre, filename))
+            app.mysql.connection.commit()  # Confirmar los cambios
+            cur.close()
+
+            flash('Juego agregado con éxito', 'success')
+        except Exception as e:
+            flash(f'Ocurrió un error al agregar el juego: {str(e)}', 'error')
+            app.mysql.connection.rollback()  # Hacer rollback si hubo un error
+        return redirect(url_for('lista'))  # Redirigir a la lista de juegos
+
+    else:
+        flash('Archivo no permitido o no seleccionado', 'error')
+        return redirect(url_for('add_juego'))
+
 
 def listaJuegos():
     cur = mysql.connection.cursor()
