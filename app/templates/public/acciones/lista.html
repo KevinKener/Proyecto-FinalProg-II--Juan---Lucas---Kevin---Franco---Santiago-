@@ -16,15 +16,34 @@
             <tr id="Registro_{{ juego.id }}">
                 <td>{{ juego.id }}</td>
                 <td>{{ juego.nombre }}</td>
-                <td>{{ juego.categoria }}</td>
-                <td>{{ juego.anio_lanzamiento }}</td>
+                <td>{{ juego.categoria }}</td> <!-- Muestra la categoría del juego -->
+                <td>{{ juego.anio_lanzamiento }}</td> <!-- Muestra el año de lanzamiento -->
+                
+                <!-- Columna de Foto -->
                 <td id="id_{{ juego.id }}" data-foto="{{ juego.foto }}">
-                    <img src="{{ url_for('static', filename='assets/fotos_juegos/' + juego.foto) }}" width="100">
+                    {% if juego.foto %}
+                    <img src="{{ url_for('static', filename='assets/fotos_juegos/' + juego.foto) }}" width="100" alt="Imagen del juego">
+                    {% else %}
+                    <span>No hay foto</span>
+                    {% endif %}
                 </td>
+
+                <!-- Columna de Acciones -->
                 <td>
-                    <button onclick="eliminarJuegoJavaScript('{{ juego.id }}')" class="btn btn-danger btn-sm">
+                    <!-- Botón Ver -->
+                    <a href="{{ url_for('verJuego', id=juego.id) }}" class="btn btn-info btn-sm" title="Ver">
+                        <i class="bi bi-eye"></i> Ver
+                    </a>
+                    
+                    <!-- Botón Actualizar -->
+                    <a href="{{ url_for('editarJuego', id=juego.id) }}" class="btn btn-warning btn-sm" title="Actualizar">
+                        <i class="bi bi-pencil-square"></i> Actualizar
+                    </a>
+                    
+                    <!-- Botón Eliminar -->
+                    <button onclick="eliminarJuegoJavaScript('{{ juego.id }}')" class="btn btn-danger btn-sm" title="Eliminar">
                         <i class="bi bi-trash"></i> Eliminar
-                    </button>                    
+                    </button>
                 </td>
             </tr>
             {% endfor %}

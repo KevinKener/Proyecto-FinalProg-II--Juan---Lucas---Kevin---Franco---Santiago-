@@ -85,16 +85,26 @@ def detallesdelJuego(idJuego):
     return juego
 
 
-def recibeActualizarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto, idJuego):
+def actualizarJuego(idJuego, nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto):
     cur = mysql.connection.cursor()
 
-    cur.execute('''UPDATE juegos SET nombre = %s, categoria = %s, descripcion = %s, precio = %s, anio_lanzamiento = %s, 
-                   plataforma = %s, disponibilidad = %s, foto = %s WHERE id = %s''',
-                (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto, idJuego))
+    # Obtener el nombre de la foto actual si no se proporciona una nueva
+    if foto:
+        cur.execute('''UPDATE juegos SET nombre = %s, categoria = %s, descripcion = %s, precio = %s, anio_lanzamiento = %s, 
+                       plataforma = %s, disponibilidad = %s, foto = %s WHERE id = %s''',
+                    (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto, idJuego))
+    else:
+        # Aquí obtienes el nombre de la foto actual antes de la actualización
+        cur.execute('''SELECT foto FROM juegos WHERE id = %s''', (idJuego,))
+        juego = cur.fetchone()
+        foto_actual = juego['foto'] if juego else None
+
+        cur.execute('''UPDATE juegos SET nombre = %s, categoria = %s, descripcion = %s, precio = %s, anio_lanzamiento = %s, 
+                       plataforma = %s, disponibilidad = %s, foto = %s WHERE id = %s''',
+                    (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto_actual, idJuego))
 
     mysql.connection.commit()
     cur.close()
-
     return 1  # Actualización exitosa
 
 

@@ -1,49 +1,45 @@
 {% extends 'public/layout.html' %}
-{% block title %}Registrar Carro{% endblock %}
+{% block title %}Detalles del Juego{% endblock %}
 
 {% block body %}
-
 
 <section>
     <h2>
         <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
-        Detalles del Carro
+        Detalles del Juego
         <hr>
     </h2>
 
-    {% if (infoCarro) %}
+    {% if (infoJuego) %}
     
-    <!-- {{ infoCarro }} -->
-
-
     <div class="card" style="width: 25rem;">
-      {% set urlCarro = '/static/assets/fotos_carros/' %}
-        {% if(infoCarro.foto) %}
-          <img src="{{ urlCarro }}{{ infoCarro.foto }}" class="card-img-top" alt="coche">
+      {% set urlJuego = '/static/assets/fotos_juegos/' %}
+        {% if(infoJuego.foto) %}
+          <img src="{{ urlJuego }}{{ infoJuego.foto }}" class="card-img-top" alt="juego">
         {% else %}
-          <img src="{{ urlCarro }}sin_foto.jpg" class="card-img-top sin_foto" alt="coche">
+          <img src="{{ urlJuego }}sin_foto.jpg" class="card-img-top sin_foto" alt="juego">
         {% endif %}
 
         <div class="card-body">
-          <h5 class="card-title"> <strong>{{ infoCarro.marca }}</strong></h5>
+          <h5 class="card-title"> <strong>{{ infoJuego.nombre }}</strong></h5>
         </div>
 
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Modelo: <strong>{{ infoCarro.modelo }}</strong></li>
-          <li class="list-group-item">Año: <strong>{{ infoCarro.year }}</strong></li>
-          <li class="list-group-item">Color: <strong>{{ infoCarro.color }}</strong></li>
-          <li class="list-group-item">Número de puertas: <strong>{{ infoCarro.puertas }}</strong></li>
-          <li class="list-group-item">Favorito: <strong>{{ infoCarro.favorito }}</strong></li>
+          <li class="list-group-item">Categoría: <strong>{{ infoJuego.categoria }}</strong></li>
+          <li class="list-group-item">Año de Lanzamiento: <strong>{{ infoJuego.year }}</strong></li>
+          <li class="list-group-item">Plataforma: <strong>{{ infoJuego.plataforma }}</strong></li>
+          <li class="list-group-item">Precio: <strong>${{ infoJuego.precio }}</strong></li>
+          <li class="list-group-item">Favorito: <strong>{{ infoJuego.favorito }}</strong></li>
         </ul>
       </div>
 
-      {% else %}
+    {% else %}
       <div class="col-12">
           <h2 class="text-center">
-              No existe el Coche
+              No existe el Juego
           </h2>
       </div>
-{% endif %}
+    {% endif %}
 
 </section>
 

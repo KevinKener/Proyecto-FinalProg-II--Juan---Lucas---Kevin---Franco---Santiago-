@@ -3,10 +3,16 @@ from werkzeug.utils import secure_filename
 from config import init_app
 import os
 from flask_mysqldb import MySQL
+# Asegúrate de importar SQLAlchemy
 
 
 # Inicializa la app
 app = Flask(__name__)
+
+# Configura para que las plantillas se recarguen automáticamente
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -35,24 +41,21 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def recibeFoto(file):
-    # Verifica si el archivo es válido y tiene una extensión permitida
-    if file and allowed_file(file.filename):
-        # Obtén el nombre seguro del archivo
+    if file and allowed_file(file.filename):  # Asegúrate de que el archivo sea válido
         filename = secure_filename(file.filename)
-
-        # Define la ruta donde se guardarán las fotos
         upload_folder = os.path.join(os.path.dirname(__file__), 'static', 'uploads')
 
-        # Verifica si el directorio existe, si no, lo crea
+        # Verificar si el directorio existe, si no, lo crea
         if not os.path.exists(upload_folder):
             os.makedirs(upload_folder)
 
-        # Guarda el archivo en el directorio 'uploads'
+        # Guardar la foto en el directorio 'uploads'
         file.save(os.path.join(upload_folder, filename))
 
-        # Retorna el nombre del archivo guardado
+        # Retorna el nombre del archivo
         return filename
-    return None  # Si el archivo no es válido o no existe
+    return None
+
 
 @app.route('/registrar-juego', methods=['GET', 'POST'])
 def addJuego():
@@ -138,6 +141,77 @@ def eliminarJuego(idJuego='', nombreFoto=''):
         os.remove(url_File)
 
     return resultadoeliminar  # Si se eliminó correctamente, devuelve 1, si no 0
+
+
+
+@app.route('/editar/<int:id>', methods=['GET', 'POST'])
+def editarJuego(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM juegos WHERE id = %s', (id,))
+    juego = cur.fetchone()
+
+    if not juego:
+        return "Juego no encontrado", 404
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        categoria = request.form['categoria']
+        descripcion = request.form['descripcion']
+        precio = request.form['precio']
+        anio_lanzamiento = request.form['anio_lanzamiento']
+        plataforma = request.form['plataforma']
+        disponibilidad = request.form['disponibilidad']
+
+        print(f"Datos recibidos: {nombre}, {categoria}, {descripcion}, {precio}, {anio_lanzamiento}, {plataforma}, {disponibilidad}")
+
+        if 'foto' in request.files:
+            foto = request.files['foto']
+            if foto.filename != '':
+                nuevoNombreFile = recibeFoto(foto)
+            else:
+                nuevoNombreFile = juego['foto']
+        else:
+            nuevoNombreFile = juego['foto']
+
+        result = actualizarJuego(id, nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile)
+
+        if result == 1:
+            return redirect(url_for('inicio'))
+        else:
+            return render_template('public/layout.html', msg='Error al actualizar el juego', tipo=1)
+
+    return render_template('public/acciones/update.html', juego=juego)
+
+
+def actualizarJuego(id, nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile):
+    cur = mysql.connection.cursor()
+    query = """
+    UPDATE juegos
+    SET nombre = %s, categoria = %s, descripcion = %s, precio = %s, anio_lanzamiento = %s, plataforma = %s, disponibilidad = %s, foto = %s
+    WHERE id = %s
+    """
+    values = (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile, id)
+    print(f"Ejecutando query: {query} con valores {values}")  # Imprime la consulta para verificar
+    cur.execute(query, values)
+    mysql.connection.commit()
+
+    if cur.rowcount == 1:  # Si se actualizó una fila
+        return 1
+    else:
+        return 0
+
+
+
+@app.route('/ver_juego/<int:id>', methods=['GET'])
+def verJuego(id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM juegos WHERE id = %s', (id,))
+    juego = cur.fetchone()
+
+    if not juego:
+        return "Juego no encontrado", 404
+    return render_template('public/acciones/view.html', juego=juego)
+
 
 @app.errorhandler(404)
 def notfound(error):
