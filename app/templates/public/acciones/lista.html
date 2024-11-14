@@ -18,12 +18,13 @@
                 <td>{{ juego.nombre }}</td>
                 <td>{{ juego.categoria }}</td>
                 <td>{{ juego.anio_lanzamiento }}</td>
-                <td><img src="{{ url_for('static', filename='assets/fotos_juegos/' + juego.foto) }}" width="100"></td>
+                <td id="id_{{ juego.id }}" data-foto="{{ juego.foto }}">
+                    <img src="{{ url_for('static', filename='assets/fotos_juegos/' + juego.foto) }}" width="100">
+                </td>
                 <td>
-                    <!-- Botón con evento onclick para eliminar -->
-                    <button onclick="eliminarJuegoJavaScript({{ juego.id }})" class="btn btn-danger btn-sm">
+                    <button onclick="eliminarJuegoJavaScript('{{ juego.id }}')" class="btn btn-danger btn-sm">
                         <i class="bi bi-trash"></i> Eliminar
-                    </button>
+                    </button>                    
                 </td>
             </tr>
             {% endfor %}

@@ -1,5 +1,5 @@
 / Alerta personalizadas */
-function mensajeAlerta(msg, tipo_msg='') {
+function mensajeAlerta(msg, _tipo_msg='') {
     let text  = document.querySelector('.text-2').textContent = `${msg}`};
 
     const toast    = document.querySelector(".toast");
