@@ -82,19 +82,28 @@ def formAddJuego():
         # Si el archivo es válido, guardarlo
         nuevoNombreFile = recibeFoto(foto)
         if nuevoNombreFile:
-            # Aquí iría el código para registrar el juego en la base de datos (simulado por ahora)
-            # resultData = registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile)
-            return render_template('public/layout.html', msg='El Registro fue un éxito', tipo=1)
+            # Registrar el juego en la base de datos
+            resultData = registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, nuevoNombreFile)
+            if resultData == 1:
+                return redirect(url_for('inicio'))  # Redirigir a la página principal
+            else:
+                return render_template('public/layout.html', msg='Error al registrar el juego', tipo=1)
         else:
             return render_template('public/layout.html', msg='Formato de archivo no permitido. Debe ser una imagen', tipo=1)
-        
-        
 
-# Simulación de la función para registrar un juego (en tu caso aquí iría la lógica de la base de datos)
+# Simulación de la función para registrar un juego (aquí iría la lógica de la base de datos)
 def registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto):
-    # Aquí es donde registrarías el juego en tu base de datos.
-    # Esto es solo una simulación de éxito.
-    return 1
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute('''INSERT INTO juegos (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto)
+                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s)''',
+                    (nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto))
+        mysql.connection.commit()
+        return 1  # Éxito
+    except Exception as e:
+        mysql.connection.rollback()  # Revertir cambios si hay un error
+        return 0  # Error
+
 
 #Ruta para eliminar un juego
 @app.route('/borrar-juego', methods=['POST'])
