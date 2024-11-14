@@ -9,33 +9,61 @@
         <hr>
     </h2>
 
-    <form action="{{ url_for('formAddJuego') }}" method="POST" class="mb-3" autocomplete="off" enctype="multipart/form-data">
+    <form action="{{ url_for('formAddJuego') }}" method="POST" class="mb-3" autocomplete="off"
+        enctype="multipart/form-data">
+        <!-- Nombre y Categoría -->
         <div class="row">
             <div class="col">
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" class="form-control" required>
+                <label for="nombre">Nombre del Juego</label>
+                <input type="text" name="nombre" class="form-control" required placeholder="Ej. Super Mario Bros">
             </div>
             <div class="col">
                 <label for="categoria">Categoría</label>
-                <input type="text" name="categoria" class="form-control" required>
+                <select name="categoria" class="form-control" required>
+                    <option value="">Selecciona una categoría</option>
+                    <option value="Acción">Acción</option>
+                    <option value="Aventura">Aventura</option>
+                    <option value="Deportes">Deportes</option>
+                    <option value="Estrategia">Estrategia</option>
+                    <option value="RPG">RPG</option>
+                    <option value="Simulación">Simulación</option>
+                    <option value="Carreras">Carreras</option>
+                    <option value="Terror">Terror</option>
+                </select>
             </div>
         </div>
 
+        <!-- Año de Lanzamiento y Plataforma -->
         <div class="row">
+            <!-- Año de Lanzamiento -->
             <div class="col">
                 <label for="anio_lanzamiento">Año de Lanzamiento</label>
-                <input type="number" name="anio_lanzamiento" class="form-control" required>
+                <input type="number" name="anio_lanzamiento" class="form-control" required min="1900"
+                    max="{{ current_year }}" placeholder="Ej. 2024">
             </div>
+
+            <!-- Plataforma -->
             <div class="col">
                 <label for="plataforma">Plataforma</label>
-                <input type="text" name="plataforma" class="form-control" required>
+                <select name="plataforma" class="form-control" required>
+                    <option value="">Selecciona una plataforma</option>
+                    <option value="PlayStation">PlayStation</option>
+                    <option value="Xbox">Xbox</option>
+                    <option value="PC">PC</option>
+                    <option value="Nintendo Switch">Nintendo Switch</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="PC Virtual Reality">PC Virtual Reality</option>
+                </select>
             </div>
         </div>
 
+
+        <!-- Precio y Disponibilidad -->
         <div class="row">
             <div class="col">
                 <label for="precio">Precio</label>
-                <input type="text" name="precio" class="form-control" required>
+                <input type="number" name="precio" class="form-control" required step="0.01" min="0"
+                    placeholder="Ej. 199.99">
             </div>
 
             <div class="col">
@@ -47,24 +75,31 @@
             </div>
         </div>
 
-        <!-- Campo de descripción agregado -->
+        <!-- Descripción -->
         <div class="row">
             <div class="col">
                 <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" class="form-control" rows="4" required></textarea>
+                <textarea name="descripcion" class="form-control" rows="4" required
+                    placeholder="Escribe una breve descripción del juego"></textarea>
             </div>
         </div>
 
+        <!-- Foto del Juego -->
         <div class="row mt-4">
             <div class="col">
                 <label for="foto">Foto del Juego</label>
                 <input type="file" name="foto" class="form-control-file" accept="image/*" required>
             </div>
         </div>
+
         <hr>
 
-        <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Registro">
+        <!-- Botón de Guardar -->
+        <div class="row">
+            <div class="col">
+                <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Registro">
+            </div>
+        </div>
     </form>
 </section>
-
 {% endblock %}

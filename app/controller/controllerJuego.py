@@ -47,8 +47,13 @@ def agregarJuego():
 
 
 def listaJuegos():
+    # Crea el cursor para ejecutar la consulta
     cur = mysql.connection.cursor()
-    cur.execute('SELECT id, nombre, foto FROM juegos')  # Asegúrate de seleccionar la columna foto
+
+    # Modifica la consulta para incluir las columnas 'categoria' y 'anio_lanzamiento'
+    cur.execute('SELECT id, nombre, categoria, anio_lanzamiento, foto FROM juegos')
+
+    # Obtiene todos los registros
     juegos = cur.fetchall()
 
     # Convertir la lista de tuplas a una lista de diccionarios
@@ -57,11 +62,14 @@ def listaJuegos():
         juego_dict = {
             'id': juego[0],
             'nombre': juego[1],
-            'foto': juego[2]
+            'categoria': juego[2],  # Añade la categoría
+            'anio_lanzamiento': juego[3],  # Añade el año de lanzamiento
+            'foto': juego[4]  # Foto
         }
         juegos_dict.append(juego_dict)
 
     return juegos_dict
+
 
 def registrarJuego(nombre, categoria, descripcion, precio, anio_lanzamiento, plataforma, disponibilidad, foto):
     cur = mysql.connection.cursor()

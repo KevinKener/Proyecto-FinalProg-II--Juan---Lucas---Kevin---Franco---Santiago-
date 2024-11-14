@@ -1,97 +1,126 @@
 {% extends 'public/layout.html' %}
 
 {% block body %}
-  <section>
+<section>
     <h2>
-      <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
-      Actualizar Información del Juego
-      <hr>
+        <a href="/" class="left" title="Volver"><i class="bi bi-arrow-left-circle"></i></a>
+        Actualizar Información del Juego
+        <hr>
     </h2>
 
     {% if juego %}
-    <form id="updateForm" action="{{ url_for('editarJuego', id=juego[0]) }}" method="POST" class="mb-3" autocomplete="off" enctype="multipart/form-data">
-        <input type="text" class="form-control" name="id" value="{{ juego.id }}" required hidden>
+    <form id="updateForm" action="{{ url_for('editarJuego', id=juego[0]) }}" method="POST" class="mb-3"
+        autocomplete="off" enctype="multipart/form-data">
 
         <div class="row">
-          <div class="col">
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" value="{{ juego.nombre }}" class="form-control" required>
-          </div>
-          <div class="col">
-            <label for="categoria">Categoría</label>
-            <input type="text" name="categoria" value="{{ juego.categoria }}" class="form-control" required>
-          </div>
+            <div class="col">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="{{ juego.nombre }}" class="form-control" required 
+                       placeholder="Ej. Super Mario Bros">
+            </div>
+            <div class="col">
+                <label for="categoria">Categoría</label>
+                <select name="categoria" class="form-control" required>
+                    <option value="">Selecciona una categoría</option>
+                    <option value="Acción" {% if juego.categoria == "Acción" %}selected{% endif %}>Acción</option>
+                    <option value="Aventura" {% if juego.categoria == "Aventura" %}selected{% endif %}>Aventura</option>
+                    <option value="Deportes" {% if juego.categoria == "Deportes" %}selected{% endif %}>Deportes</option>
+                    <option value="Estrategia" {% if juego.categoria == "Estrategia" %}selected{% endif %}>Estrategia</option>
+                    <option value="RPG" {% if juego.categoria == "RPG" %}selected{% endif %}>RPG</option>
+                    <option value="Simulación" {% if juego.categoria == "Simulación" %}selected{% endif %}>Simulación</option>
+                    <option value="Carreras" {% if juego.categoria == "Carreras" %}selected{% endif %}>Carreras</option>
+                    <option value="Terror" {% if juego.categoria == "Terror" %}selected{% endif %}>Terror</option>
+                </select>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col">
+                <label for="descripcion">Descripción</label>
+                <textarea name="descripcion" class="form-control" rows="5" required>{{ juego.descripcion }}</textarea>
+            </div>
+            <div class="col">
+                <label for="precio">Precio</label>
+                <input type="number" name="precio" value="{{ juego.precio }}" class="form-control" 
+                       step="0.01" min="0" required placeholder="Ej. 199.99">
+            </div>
+        </div>
+        
+
+        <div class="row">
+            <div class="col">
+                <label for="anio_lanzamiento">Año de Lanzamiento</label>
+                <input type="text" name="anio_lanzamiento" class="form-control" 
+                       value="{{ juego.anio_lanzamiento }}" required 
+                       pattern="^(19|20)\d{2}$" 
+                       placeholder="Ingrese un año (ej. 2024)">
+            </div>
+            <div class="col">
+                <label for="plataforma">Plataforma</label>
+                <select name="plataforma" class="form-control" required>
+                    <option value="">Selecciona una plataforma</option>
+                    <option value="PC" {% if juego.plataforma == "PC" %}selected{% endif %}>PC</option>
+                    <option value="PlayStation" {% if juego.plataforma == "PlayStation" %}selected{% endif %}>PlayStation</option>
+                    <option value="Xbox" {% if juego.plataforma == "Xbox" %}selected{% endif %}>Xbox</option>
+                    <option value="Nintendo Switch" {% if juego.plataforma == "Nintendo Switch" %}selected{% endif %}>Nintendo Switch</option>
+                    <option value="Mobile" {% if juego.plataforma == "Mobile" %}selected{% endif %}>Mobile</option>
+                    <option value="VR" {% if juego.plataforma == "VR" %}selected{% endif %}>VR (Realidad Virtual)</option>
+                </select>
+            </div>
         </div>
 
         <div class="row">
-          <div class="col">
-            <label for="descripcion">Descripción</label>
-            <textarea name="descripcion" class="form-control" required>{{ juego.descripcion }}</textarea>
-          </div>
-          <div class="col">
-            <label for="precio">Precio</label>
-            <input type="text" name="precio" value="{{ juego.precio }}" class="form-control" required>
-          </div>
+            <div class="col">
+                <label for="disponibilidad">Disponibilidad</label>
+                <select name="disponibilidad" class="form-control" required>
+                    <option value="">Selecciona una opción</option>
+                    <option value="Disponible" {% if juego.disponibilidad == "Disponible" %}selected{% endif %}>Disponible</option>
+                    <option value="Agotado" {% if juego.disponibilidad == "Agotado" %}selected{% endif %}>Agotado</option>
+                </select>
+            </div>
         </div>
-
+        
         <div class="row">
-          <div class="col">
-            <label for="anio_lanzamiento">Año de Lanzamiento</label>
-            <input type="text" name="anio_lanzamiento" value="{{ juego.anio_lanzamiento }}" class="form-control" required>
-          </div>
-          <div class="col">
-            <label for="plataforma">Plataforma</label>
-            <input type="text" name="plataforma" value="{{ juego.plataforma }}" class="form-control" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <label for="disponibilidad">Disponibilidad</label>
-            <input type="text" name="disponibilidad" value="{{ juego.disponibilidad }}" class="form-control" required>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col">
-            <label for="foto">Foto</label>
-            <input type="file" name="foto" class="form-control">
-            <p>Foto actual: {{ juego.foto }}</p>
-          </div>
+            <div class="col">
+                <label for="foto">Nueva Foto</label>
+                <input type="file" name="foto" class="form-control">
+            </div>
         </div>
 
         <hr>
         <input class="button-primary mt-3 btn btn-info btn-block bold" type="submit" value="Guardar Actualización">
-      </form>
+    </form>
     {% else %}
-      <div class="col-12">
+    <div class="col-12">
         <h2 class="text-center">
-          No existe el Juego
+            No existe el Juego
         </h2>
-      </div>
+    </div>
     {% endif %}
-  </section>
+</section>
 
-  <script>
-    document.getElementById("updateForm").onsubmit = function(event) {
-      event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-      var formData = new FormData(this);
-      var urlForm = "{{ url_for('editarJuego', id=juego[0]) }}";  // URL correcta de la acción
+<script>
+    document.getElementById("updateForm").onsubmit = function (event) {
+        event.preventDefault(); // Evitar el comportamiento por defecto del formulario
 
-      $.ajax({
-        type: "POST",
-        url: urlForm,
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-          window.location.href = '/';  // Redirigir a la página principal después de la actualización
-        },
-        error: function(xhr, status, error) {
-          alert('Error al actualizar el juego.');
-        }
-      });
+        var formData = new FormData(this);
+        var urlForm = "{{ url_for('editarJuego', id=juego[0]) }}";  // URL correcta de la acción
+
+        $.ajax({
+            type: "POST",
+            url: urlForm,
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                window.location.href = '/';  // Redirigir a la página principal después de la actualización
+            },
+            error: function (xhr, status, error) {
+                alert('Error al actualizar el juego.');
+            }
+        });
     };
-  </script>
+</script>
 {% endblock %}

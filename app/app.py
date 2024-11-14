@@ -204,13 +204,34 @@ def actualizarJuego(id, nombre, categoria, descripcion, precio, anio_lanzamiento
 
 @app.route('/ver_juego/<int:id>', methods=['GET'])
 def verJuego(id):
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM juegos WHERE id = %s', (id,))
-    juego = cur.fetchone()
+    # Usa la función `obtener_juego_por_id` para obtener los detalles del juego
+    juego = obtener_juego_por_id(id)
 
+    # Si no existe el juego, devuelve un mensaje de error
     if not juego:
         return "Juego no encontrado", 404
-    return render_template('public/acciones/view.html', juego=juego)
+
+    # Renderiza la plantilla y pasa `juego` como `infoJuego`
+    return render_template('public/acciones/view.html', infoJuego=juego)
+
+def obtener_juego_por_id(id):
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id, nombre, categoria, foto, anio_lanzamiento, plataforma, precio FROM juegos WHERE id = %s", (id,))
+    juego = cur.fetchone()
+    cur.close()  # Asegúrate de cerrar el cursor
+
+    if juego:
+        # Convierte el resultado en un diccionario
+        return {
+            'id': juego[0],
+            'nombre': juego[1],
+            'categoria': juego[2],
+            'foto': juego[3],
+            'year': juego[4],
+            'plataforma': juego[5],
+            'precio': juego[6]
+        }
+    return None
 
 
 @app.errorhandler(404)

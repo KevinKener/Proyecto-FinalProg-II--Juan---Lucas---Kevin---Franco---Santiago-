@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename ='assets/css/custom_alert.css') }}">
 </head>
 
+
 <body class="loader">
 
   {% include 'public/navbar.html' %}
@@ -30,10 +31,10 @@
 
     {% block body %}
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-8">
         <a href="{{ url_for('addJuego') }}" title="Registrar nuevo Juego"
           class="btn btn-primary btn-lg btn-block btn-sm mb-2" style="float:right">
-          <i class="bi bi-gamepad-fill"></i>
+          <i class="bi bi-house-door"></i>
           Nuevo Registro
         </a>
       </div>
